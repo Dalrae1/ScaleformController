@@ -8,8 +8,12 @@ function createScaleform(scaleformName)
         __index = function(_, indexed)
             return function(_, ...)
                 local temp_args = {...}
-                local expectingReturn = type(temp_args[#temp_args]) == 'function'
-                thiscb = temp_args[#temp_args]
+                local expectingReturn =false 
+                local thiscb = nil 
+                if type(temp_args[#temp_args]) == 'function' then 
+                    expectingReturn = true 
+                    thiscb = temp_args[#temp_args]
+                end 
                 table.remove(#temp_args)
                 local args = temp_args
                 
