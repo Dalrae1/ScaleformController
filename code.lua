@@ -59,6 +59,7 @@ function createScaleform(scaleformName)
                     Citizen.Wait(0)
                     DrawScaleformMovieFullscreen(scaleform, r or 255, g or 255, b or 255, a or 255)
                 until GetGameTimer()-startScaleformTimer >= (ms or 2000)
+                return 
             end)
         end
     }
