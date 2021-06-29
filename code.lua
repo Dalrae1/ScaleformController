@@ -40,14 +40,14 @@ function createScaleform(scaleformName)
                         EndScaleformMovieMethod()
                         if returnString ~= "" then
                             thiscb(returnString)
-                            return returnString
+                            return 
                         end
                         if returnInt ~= 0 and not returnBool then
                             thiscb(returnInt)
-                            return returnInt
+                            return 
                         end
                         thiscb(returnBool)
-                        return returnBool
+                        return 
                     end)
                 end
             end
