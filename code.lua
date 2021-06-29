@@ -7,9 +7,13 @@ function createScaleform(scaleformName)
     t1 = {
         __index = function(_, indexed)
             return function(_, ...)
-                local args = {...}
-                local expectingReturn = args[1]
-                table.remove(args, 1)
+                local temp_args = {...}
+                local expectingReturn = type(temp_args[#temp_args]) == 'function'
+                thiscb = temp_args[#temp_args]
+                table.remove(#temp_args)
+                local args = temp_args
+                
+                
                 BeginScaleformMovieMethod(scaleform, indexed)
                 for i,v in pairs(args) do
                     if type(v) == "string" then
@@ -26,20 +30,25 @@ function createScaleform(scaleformName)
                 end
                 local value = EndScaleformMovieMethodReturn()
                 if expectingReturn then
-                    while not IsScaleformMovieMethodReturnValueReady(value) do
-                        Wait(0)
-                    end
-                    local returnString = GetScaleformMovieMethodReturnValueString(value)
-                    local returnInt = GetScaleformMovieMethodReturnValueInt(value)
-                    local returnBool = GetScaleformMovieMethodReturnValueBool(value)
-                    EndScaleformMovieMethod()
-                    if returnString ~= "" then
-                        return returnString
-                    end
-                    if returnInt ~= 0 and not returnBool then
-                        return returnInt
-                    end
-                    return returnBool
+                    CreateThread(function()
+                        while not IsScaleformMovieMethodReturnValueReady(value) do
+                            Wait(0)
+                        end
+                        local returnString = GetScaleformMovieMethodReturnValueString(value)
+                        local returnInt = GetScaleformMovieMethodReturnValueInt(value)
+                        local returnBool = GetScaleformMovieMethodReturnValueBool(value)
+                        EndScaleformMovieMethod()
+                        if returnString ~= "" then
+                            thiscb(returnString)
+                            return returnString
+                        end
+                        if returnInt ~= 0 and not returnBool then
+                            thiscb(returnInt)
+                            return returnInt
+                        end
+                        thiscb(returnBool)
+                        return returnBool
+                    end)
                 end
             end
         end,
