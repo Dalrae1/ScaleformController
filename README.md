@@ -9,7 +9,7 @@ Basic usage example
 ```
 local scaleform = createScaleform("Scaleform_Name")
 local functions = scaleform:functionThatWillReturn(functionArgs1, functionArgs2, ...,cb(results)) -- Will return a value when last having a cb action
-local functionsnotreturn = scaleform:functionThatWillReturn(functionArgs1, functionArgs2, ...) -- Will return a value
+local functionsnotreturn = scaleform:functionThatWillReturn(functionArgs1, functionArgs2, ...) -- Without return values
 ```
 
 Return a value from a scaleform function
