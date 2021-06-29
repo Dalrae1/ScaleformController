@@ -14,7 +14,7 @@ function createScaleform(scaleformName)
                     expectingReturn = true 
                     thiscb = temp_args[#temp_args]
                 end 
-                table.remove(#temp_args)
+                table.remove(temp_args,#temp_args)
                 local args = temp_args
                 
                 
